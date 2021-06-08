@@ -1,0 +1,2 @@
+include ':app', ':fragmentdemo', ':coffeeshop_navbar', ':spinner', ':androidwork', ':gridview', ':sharedpreference', ':sql', ':viewflipper', ':menu'
+rootProject.name='My Application'

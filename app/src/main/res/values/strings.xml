@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="_0123456789">0123456789</string>
+    <string name="t4">请输入信息</string>
+</resources>
