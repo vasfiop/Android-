@@ -1,11 +1,13 @@
 package com.example.coffeeshop_navbar.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -39,6 +41,7 @@ public class ShopActivity extends AppCompatActivity {
         init(this);
 
         set();
+
     }
 
     private void init(Context context) {
@@ -82,6 +85,21 @@ public class ShopActivity extends AppCompatActivity {
 
         MyAdapter adapter = new MyAdapter(this, data, R.layout.item_listview_shop, new String[]{"shop_name", "shop_address", "shop_tel", "img_id"}, new int[]{R.id.shop_name, R.id.shop_address, R.id.shop_tel, R.id.iv_img});
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(
+                        ShopActivity.this,
+                        ShopItemActivity.class
+                );
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("shop", shops[position]);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     class MyAdapter extends SimpleAdapter {
