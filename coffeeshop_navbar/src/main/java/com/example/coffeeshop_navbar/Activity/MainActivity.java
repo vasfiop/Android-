@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<Fragment> list;
 
     private Boolean isExited = false;
-    
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override

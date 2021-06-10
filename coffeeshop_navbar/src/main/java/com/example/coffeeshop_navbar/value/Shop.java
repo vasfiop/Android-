@@ -1,9 +1,8 @@
 package com.example.coffeeshop_navbar.value;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class Shop extends ArrayList<CharSequence> implements Serializable {
+public class Shop implements Serializable {
 
     private String shop_id;
     private String shop_name;

@@ -38,19 +38,12 @@ public class ShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
-        init(this);
-
-        set();
-
-    }
-
-    private void init(Context context) {
         listView = findViewById(R.id.SA_listview);
 
-        String packageName = context.getPackageName();
+        String packageName = this.getPackageName();
 
         try {
-            appInfo = context.getPackageManager().getApplicationInfo(
+            appInfo = this.getPackageManager().getApplicationInfo(
                     packageName, PackageManager.GET_META_DATA);
             String dbDir = appInfo.dataDir + File.separator + DB_DIR;
             File file = new File(dbDir);
@@ -66,34 +59,30 @@ public class ShopActivity extends AppCompatActivity {
 
         dbUtil = DBUtil.getInstance(databasePath);
         dbUtil.openDB();
-    }
 
-    private void set() {
         shops = dbUtil.queryAllShops();
         data = new ArrayList<>();
-        for (int i = 0; i < shops.length; i++) {
+
+        for (Shop shop : shops) {
             HashMap<String, Object> map = new HashMap<>();
-            map.put("shop_name", shops[i].getShop_name());
-            map.put("shop_address", shops[i].getShop_address());
-            map.put("shop_tel", shops[i].getTel());
-            String img_name = shops[i].getImg_name();
+            map.put("shop_name", shop.getShop_name());
+            map.put("shop_address", shop.getShop_address());
+            map.put("shop_tel", shop.getTel());
+            String img_name = shop.getImg_name();
             int img_id = getResources().getIdentifier(img_name, "drawable", getPackageName());
             map.put("img_id", img_id);
 
             data.add(map);
         }
 
-        MyAdapter adapter = new MyAdapter(this, data, R.layout.item_listview_shop, new String[]{"shop_name", "shop_address", "shop_tel", "img_id"}, new int[]{R.id.shop_name, R.id.shop_address, R.id.shop_tel, R.id.iv_img});
+        MyAdapter adapter = new MyAdapter(this, data, R.layout.item_listview_shop,
+                new String[]{"shop_name", "shop_address", "shop_tel", "img_id"}, new int[]{R.id.shop_name, R.id.shop_address, R.id.shop_tel, R.id.iv_img});
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
-                intent.setClass(
-                        ShopActivity.this,
-                        ShopItemActivity.class
-                );
+                Intent intent = new Intent(ShopActivity.this, ShopItemActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("shop", shops[position]);
                 intent.putExtras(bundle);
@@ -101,10 +90,10 @@ public class ShopActivity extends AppCompatActivity {
             }
         });
     }
-
+    
     class MyAdapter extends SimpleAdapter {
 
-        public MyAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+        MyAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
             super(context, data, resource, from, to);
 
         }
