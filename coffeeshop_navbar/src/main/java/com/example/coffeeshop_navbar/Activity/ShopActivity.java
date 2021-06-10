@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffeeshop_navbar.R;
@@ -89,8 +93,41 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        registerForContextMenu(listView);
     }
-    
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.shopchange_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int index = (int) menuInfo.id;
+        Bundle bundle = new Bundle();
+        switch (item.getItemId()) {
+            case R.id.add:
+                Intent add = new Intent(ShopActivity.this, AddActivity.class);
+                startActivity(add);
+                break;
+            case R.id.update:
+                Intent update = new Intent(ShopActivity.this, UpdateActivity.class);
+                bundle.putSerializable("shop", shops[index]);
+                update.putExtras(bundle);
+                startActivity(update);
+                break;
+            case R.id.delete:
+                dbUtil.deleteOneData(shops[index].getShop_id());
+                Toast.makeText(ShopActivity.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
     class MyAdapter extends SimpleAdapter {
 
         MyAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {

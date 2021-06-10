@@ -60,6 +60,7 @@ public class HomeFragment extends Fragment {
                 case R.id.ll_module1:
                     Intent intent = new Intent(getActivity(), ShopActivity.class);
                     startActivity(intent);
+                    break;
             }
         }
     }
