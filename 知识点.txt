@@ -1,0 +1,418 @@
+版本
+V 3.1_16
+
+4/14
+{
+    工作环境
+    java：代码
+    res：资源文件
+    {
+        drawable:
+        layout:样式
+        mipmap:图标
+        values:
+        {
+            colors:颜色
+            strings:字符串
+            styles:定义样式或者主题
+        }
+    }
+<manifest>
+    <uses-permission>
+        定义权限
+        READ_EXTERNAL_STORAGE读取外部权限
+    </uses-permission>
+    <appliciation>
+        内部都是配置信息当前应用
+        icon:图标
+        roundIcon:圆角图标
+        label:标签应用名字
+    </appliciation>
+    <activity>
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+</manifest>
+
+}
+4/15
+{
+    生命周期函数
+    {
+        onCreate:第一次创建时被调用
+        onStart:变得可见是调用该函数
+        onResume:开始准备与用户交互时调用该方法
+        onPause:当系统即将启动另外一个Activity之前调用该方法
+        onStop:当前活动变得不可见时调用该方法
+        onDestroy:当前活动被销毁之前将会调用该方法
+        onResume:当一个活动再次启动之前将会调用该方法
+    }
+    生命周期状态
+    {
+        前景活动：处于屏幕最上方，用户交互的活动，一般情况下不会发出kill请求
+        可见活动：对用户可见但是不在前景活动，比如弹窗程序，一般情况下不会发出kill请求
+        后台活动：一个对用户不可见，并且处于pause状态的活动
+        空进程：没有运行活动或者其他服务，当内存开始降低时系统很快就会kill掉这些进程
+    }
+    注册Activity需要在Manifest中注册
+}
+Intent
+{
+    putExtra();方法传递参数，第一个为名字，必须是字符串
+    setClass();方法进行跳转，从第一个参数跳转到第二个参数
+}
+{
+    findViewById();从id获得该控件
+}
+TextView
+{
+    setText();方法拼接参数内的字符串
+}
+布局文件
+{
+    animator 属性动画的xml
+    anim 渐变动画
+    menu 定义菜单
+    raw 保存原始形式的任意文件
+    assets 中的文件没有资源id
+    arrays 资源数组
+    dimens 尺寸值
+    xml 读取任意的xml文件
+    背景色
+        background:背景颜色 参数:RGB
+    线性布局LinearLayout
+    {
+        orientation:布局方式(默认为水平布局) 参数:vertical 垂直布局 horizontal 水平布局
+        layout_width宽度 layout_height高度 参数:match_parent(匹配父级参数) wrap_content(采用默认大小) 数字dp(单位是dp)
+        layout_gravity:控制控件相对于容器的对齐方式 参数:center(全部居中)
+        baselineAligned:水平的基准线的对齐 参数:false
+        layout_weight:设置权重做到相对的自适应
+    }
+    相对布局RelativeLayout
+    {
+        RelativeLayout:
+        {
+            layout_toRightOf:该控件在哪个控件的右侧
+            layout_toLeftOf:该控件在哪个控件的左侧
+            layout_above:该控件在哪个控件的上侧
+            layout_below:控件的下侧
+            (参数为参照控件的id)
+            layout_alignRight:右对齐
+            layout_alignLeft:左对齐
+            layout_alignTop:顶部对齐
+            layout_alignBottom:底部对齐
+
+            layout_alignBaseline:该控件的baseline和给定的id的控件的baseline对齐
+            layout_alignParentRight:父布局右对齐
+            layout_alignParentLeft:父布局左对齐
+            layout_alignParentTop:父布局顶部对齐
+            layout_alignParentBottom:父布局底部对齐
+            layout_centerInParent:父布局中心位置
+            layout_centerVertical:父布局垂直中心
+            layout_centerHorizontal:父布局水平中心
+            (参数为true/false)
+        }
+        gravity:对齐方式
+        ignoreGravity:设置布局管理器内哪个空间不受gravity属性影响
+    }
+    帧布局FrameLayout
+    {
+        可以布置多个view，但是只有一个view显示
+    }
+    网格布局GridLayout
+    {
+        layout_column:显示列(从0开始计数)
+        layout_row:显示行(从0开始计数)
+        layout_columnSpan:列合并，表示控件所占的列数
+        layout_rowSpan:跨行
+        layout_columnSpan:跨列
+        layout_rowWeight:行权重
+        layout_columnWeight:列权重
+        android:columnCount:设置列数量
+        android:rowCount:设置行数量
+    }
+    android.constraintlayout.widget.ConstraintLayout 默认布局约束布局
+    表格布局TableLayout
+    {
+        可以跨行，但是不能跨列span
+        网格布局的边界是对用户不可见的
+        <TableRow>
+            一个行
+        </TableRow>
+    }
+    约束布局F
+    {
+        inspector控件大小
+        {
+
+        }
+        Guidelines
+        {
+            让两个按钮在水平方向上居中显示
+        }
+        Autoconnect
+        {
+
+        }
+        Inference
+        {
+
+        }
+        layout_constraint
+    }
+    控件
+    {
+        文本控件
+        {
+            TextView
+            {
+                textsize:设置字号
+                textColor:设置字体颜色
+                ems:设置宽度N个字符的宽度
+                lines:设置文本的行数
+                gravity:设置字体方向
+                ellipsize 设置当文字过长时,该控件该如何显示。
+                {
+                    start:省略号显示在开头
+                    end:省略号显示在
+                    middle:省略号显示在中间
+                    marquee:以跑马灯的方式显示(动画横向移动)
+                }
+                marqueeRepeatLimit:在ellipsize指定marquee的情况下，设置重复滚动的次数，marquee_forever表示无限次。
+                lineSpacingExtra:设置行间距。
+                lineSpacingMultiplier:设置行间距的倍数。
+                scrollHorizontally:设置文本超出TextView的宽度的情况下，是否出现横拉条。
+                singleLine:设置单行显示。如果和layout_width一起使用，当文本不能全部显示时，后面用“…”来表示。
+                textScaleX:设置文字缩放
+                android:textStyle:设置字形
+                android:shadowRadius:设置文字阴影效果
+                scrollHorizontally:是否滚动
+                <requestFocus/>聚焦
+                gravity 文字居中 
+                setText()将字符串穿给布局文件
+            }
+            ScrollView 垂直滚动
+            {
+                ScrollView是一种FrameLayout，意味需要在其上放置有自己滚动内容的子元素。
+                ScrollView只支持垂直滚动。
+            }
+            EditText 可以编辑的文本框
+            {
+                inputType:
+                    textPassword:设置密码  
+                singleLine:强制显示在一行
+                autoText:拼写检查
+                capitalize:将单词或者句子的首字母大写
+                hint:水印字符串
+                numeric:设置只能输入整数integer，如果是小数则是：decimal
+                phoneNumber:只能输入电话号码
+                textColor:字体颜色
+                textStyle:字体，bold, italic, bolditalic
+                textSize:大小
+                textAlign:居中 center
+                background:背景，@null，指透明
+                inputType:设置属性
+                digits:设置只接受某些字符
+                maxLength:设置文本长度限制
+            }
+            AutoCompleteTextView 自动完成功能的控件
+            {
+                clearListSelection()清楚险种的列表项
+                dismissDropDown() 如果存在关闭下拉菜单
+                getAdapter() 获取适配器
+                enoughToFilter() 当文本长度超过阀值时过滤
+                performValidation() 代替验证整个文本，这个子类方法验证每个单独的文字标记
+                setTokenizer(MultiAutoCompleteTextView.Tokenizer t) 用户正在输入时，tokenizer设置将用于确定文本相关范围内
+            }
+            MultiAutoCompleteTextView 自动完成功能的控件
+            {
+
+            }
+            ArrayAdapter 自动完成的待选数据
+            {
+
+            }
+        }
+        按钮控件
+        {
+            Button
+            {
+
+            }
+            ImageButton
+            {
+                setVisibility 
+            }
+            ToggleButton
+            {
+                
+            }
+            CheckBox
+            {
+                
+            }
+            RadioButton
+            {
+                button:@null 取消按钮样式
+            }
+            RadioGroup
+            {
+                使用RadioGroup.OnCheckedChangeListener对象来完成监听
+            }
+            Switch 真假按钮
+            {
+
+            }
+            ProgressBar 加载按钮
+            {
+                style="?android:attr/progressBarStyleHorizontal" 进度条
+                style="?android:attr/progressBarStyle" 圆圈
+                progress 默认值
+            }
+            SeekBar 拖动条
+            {
+                max设置最大值
+                progress 默认值
+            }
+            RatingBar 星星
+            {
+                numStart 总共几颗星
+                rating 默认值几星
+            }
+        }
+        日期/时间控件
+        {
+            DatePickerDialog
+            {
+
+            }
+            TimePickerDialog
+            {
+
+            }
+            Calendar
+            {
+
+            }
+            Chronometer 计时器
+            {
+                start() 开始
+                stop() 停止
+                setBase(SystemClock.elapsedRealtime()) 重置
+            }
+        }
+        界面控件
+        {
+            Fragment 碎片控件
+            {
+                继承自Fragment
+                只能依附Actiity存在
+                OnAttach()
+                OnCreate() 初始化时调用
+                OnCreateView() 第一次绘制是被调用
+                OnPause() 用户离开时被调用
+                getActivity() 在Fragment获取Activity
+                GetFragmentManager() 在Activity获取Fragment
+                size() 数量
+                
+            }
+            ViewPager 轮播图
+            {
+                继承自ViewGroup
+            }
+            PageAdapter 
+            {
+                首先继承PagerAdapter类
+            }
+            FragmentPagerAdapter 
+            {
+                是PagerAdapter中的其中一种实现每一页表示位Fragment
+                只需要实现getItem()和getCount()
+            }
+        }
+        高级控件
+        {
+            Adapter
+            {
+                数据库的适配器是CursorAdapter
+            }
+            Spinner 列表选择框
+            {
+                1获取Spinner对象
+                2创建Adapter
+                3为Spinner对象设置Adapter
+                4为Spinner对象设置监听器
+                setDropDownViewResource()设置当Spinner按下时在下拉列表里
+                setDropDownVerticalOffset()显示数据视图偏移量
+                setOnItemSelectedListener()该事件在菜单被选中时触发
+                public void onItemSelected(AdapterView<?> parent, View view,int position, long id) 
+                mySpinner.getSelectedItem()获取选中项的值
+            }
+            ListView 列表
+            {
+                SimpleAdapter(context, data, resource,String[]from,int[] to)
+                android:scrollbars="none" 隐藏滑动条
+            }
+            ExpandableListview 可扩展列表
+            {
+                包含2层， 一层是GroupLayout,第二层是ChildLayout
+            }
+            HorizontalScrollView 水平滚动条
+            {
+                继承自FrameLayout
+                一般使用横向的LinearLayout作为子视图
+                addView()添加一个子视图
+                android:scrollbars="none" 隐藏滑动条
+            }
+            GridView 网格控件
+            {
+                numColums 设置列数
+                android:stretchMode="columnWidth" 伸展的模式
+                columnWidth 列宽
+            }
+            ViewFlipper 左右可以滑动，针对一整个布局
+            {}
+            多点触控
+            {}
+            手势识别
+            {}
+            
+        }
+    }
+    shap
+    corners 设置圆角
+        radius
+    gradient 渐变
+        angle
+        startColor
+        endColor
+}
+onCreate方法
+{
+    startActivityForResult();该方法在活动销毁的时候能够返回一个结果给上一个活动，接受2个参数
+        第一个是Intent对象，第二个是数据
+    finish();关闭当前页面
+    serResult();方法 接受2个参数，第一个用于向上一个活动返回处理结果一般使用RESULT_OK或者RESULT_CANCELED这两个值，
+        第二个参数是把带有数据的Intent传递回去，然后调用了finish()方法
+}
+文件
+{
+    SharedPreference 轻量级的数据保存方式
+    完全屏蔽对文件系统的操作过程
+    实现保存和读取
+
+    私有 进行读取或写入
+    edit()编辑内容的方法
+    putString()
+    putInt()
+    putFloat()
+    commit()提交
+    getSharedPreference()将文件名字和模式作为参数
+
+}
+数据库
+{
+
+}

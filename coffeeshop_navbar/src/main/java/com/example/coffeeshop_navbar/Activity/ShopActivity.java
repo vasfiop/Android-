@@ -1,6 +1,7 @@
 package com.example.coffeeshop_navbar.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffeeshop_navbar.R;
@@ -107,7 +109,7 @@ public class ShopActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int index = (int) menuInfo.id;
+        final int index = (int) menuInfo.id;
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.add:
@@ -121,8 +123,21 @@ public class ShopActivity extends AppCompatActivity {
                 startActivity(update);
                 break;
             case R.id.delete:
-                dbUtil.deleteOneData(shops[index].getShop_id());
-                Toast.makeText(ShopActivity.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(ShopActivity.this)
+                        .setMessage("是否确认删除？")
+                        .setPositiveButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbUtil.deleteOneData(shops[index].getShop_id());
+                                Toast.makeText(ShopActivity.this, "删除成功！", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
                 break;
         }
         return super.onContextItemSelected(item);
